@@ -32,15 +32,14 @@ quoteInputElement.addEventListener('input', () => {
 function getRandomQuote() {
     return fetch(RANDOME_QUOTE_API_URL)
      .then(response => response.json())
-     .then(data => data.contect)
+     .then(data => data.content)
 }
 
-async function getNextQuote() {
+async function renderNewQuote() {
     const quote = await getRandomQuote()
     quoteDisplayElement.innerHTML = ''
     quote.split('').forEach(character => {
         const characterSpan = document.createElement('span')
-        characterSpan.classList.add('correct')
         characterSpan.innerText = character
         quoteDisplayElement.appendChild(characterSpan)
     })
