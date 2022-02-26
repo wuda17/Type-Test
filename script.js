@@ -3,6 +3,7 @@ const quoteDisplayElement = document.getElementById('quoteDisplay')
 const quoteInputElement = document.getElementById('quoteInput')
 const timerElement = document.getElementById('timer')
 
+//
 quoteInputElement.addEventListener('input', () => {
     const arrayQuote = quoteDisplayElement.querySelectorAll('span')
     const arrayValue = quoteInputElement.value.split('')
@@ -29,12 +30,22 @@ quoteInputElement.addEventListener('input', () => {
     if (correct) renderNewQuote()
 })
 
+//Getting quote using fetch and converting it to JSON and grabbing the quote by referencing the content key logs in the console the status of each fetch
 function getRandomQuote() {
     return fetch(RANDOME_QUOTE_API_URL)
-     .then(response => response.json())
+     .then(response => {
+         if (response.ok) {
+             console.log('Successfully loaded quote from API')
+         }
+         else {
+             console.log('Failed to load quote from API')
+         }
+         response.json()
+     })
      .then(data => data.content)
-}
+}j
 
+//Get new quote from API and split the quote to characters and iterate through the string and append to quoteDisplayElement
 async function renderNewQuote() {
     const quote = await getRandomQuote()
     quoteDisplayElement.innerHTML = ''
@@ -47,6 +58,7 @@ async function renderNewQuote() {
     startTimer()
 }
 
+//Starting a timer by setting an interval of 1000 ms and setting equal to current datetime
 let startTime
 function startTimer() {
     timerElement.innerText = 0;
